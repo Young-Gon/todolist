@@ -49,7 +49,7 @@ class AuthController(
 
     @PostMapping("/signup")
     fun registerUser(@Valid @RequestBody signUpRequest: SignUpRequest): ResponseEntity<*> {
-        if (userRepository.existsByEmail(signUpRequest.email!!)!!) {
+        if (userRepository.existsByEmail(signUpRequest.email!!)) {
             throw BadRequestException("Email address already in use.")
         }
 
