@@ -4,5 +4,6 @@ enum class AuthProvider {
     local,
     facebook,
     google,
-    github
+    naver,
+    kakao
 }

@@ -4,9 +4,10 @@ import com.gondev.todolist.exception.OAuth2AuthenticationProcessingException
 import com.gondev.todolist.model.AuthProvider
 import com.gondev.todolist.model.User
 import com.gondev.todolist.repository.UserRepository
+import com.gondev.todolist.repository.create
+import com.gondev.todolist.repository.save
 import com.gondev.todolist.security.UserPrincipal
-import com.gondev.todolist.security.oauth2.user.OAuth2UserInfo
-import com.gondev.todolist.security.oauth2.user.getOAuth2UserInfo
+import com.gondev.todolist.security.oauth2.user.*
 import org.springframework.security.authentication.InternalAuthenticationServiceException
 import org.springframework.security.core.AuthenticationException
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService
@@ -33,7 +34,6 @@ class CustomOAuth2UserService(
             // Throwing an instance of AuthenticationException will trigger the OAuth2AuthenticationFailureHandler
             throw InternalAuthenticationServiceException(ex.message, ex.cause)
         }
-
     }
 
     private fun processOAuth2User(oAuth2UserRequest: OAuth2UserRequest, oAuth2User: OAuth2User): OAuth2User {
@@ -56,24 +56,31 @@ class CustomOAuth2UserService(
             user = registerNewUser(oAuth2UserRequest, oAuth2UserInfo)
         }
 
+        if(oAuth2UserRequest.clientRegistration.registrationId.equals(AuthProvider.naver.toString(),false))
+            return UserPrincipal.create(user, oAuth2User.attributes["response"] as MutableMap<String, Any>)
+
         return UserPrincipal.create(user, oAuth2User.attributes)
     }
 
-    private fun registerNewUser(oAuth2UserRequest: OAuth2UserRequest, oAuth2UserInfo: OAuth2UserInfo): User {
-        val user = User()
-
-        user.provider = AuthProvider.valueOf(oAuth2UserRequest.clientRegistration.registrationId)
-        user.providerId = oAuth2UserInfo.id
-        user.name = oAuth2UserInfo.name
-        user.email = oAuth2UserInfo.email
-        user.imageUrl = oAuth2UserInfo.imageUrl
-        return userRepository.save(user)
+    private fun getOAuth2UserInfo(registrationId: String, attributes: MutableMap<String, Any>) =
+            when(registrationId.toLowerCase()){
+        AuthProvider.google.toString() -> GoogleOAuth2UserInfo(attributes)
+        AuthProvider.facebook.toString() -> FacebookOAuth2UserInfo(attributes)
+        AuthProvider.naver.toString() -> NaverOAuth2UserInfo(attributes["response"] as MutableMap<String, Any>)
+        AuthProvider.kakao.toString() -> KakaoOAuth2UserInfo(attributes)
+        else -> throw OAuth2AuthenticationProcessingException("Sorry! Login with $registrationId is not supported yet.")
     }
 
-    private fun updateExistingUser(existingUser: User, oAuth2UserInfo: OAuth2UserInfo): User {
-        existingUser.name = oAuth2UserInfo.name
-        existingUser.imageUrl = oAuth2UserInfo.imageUrl
-        return userRepository.save(existingUser)
+    private fun registerNewUser(oAuth2UserRequest: OAuth2UserRequest, oAuth2UserInfo: OAuth2UserInfo)=userRepository.create {
+        provider = AuthProvider.valueOf(oAuth2UserRequest.clientRegistration.registrationId)
+        providerId = oAuth2UserInfo.id
+        name = oAuth2UserInfo.name
+        email = oAuth2UserInfo.email
+        imageUrl = oAuth2UserInfo.imageUrl
     }
 
+    private fun updateExistingUser(existingUser: User, oAuth2UserInfo: OAuth2UserInfo): User = userRepository.save(existingUser) {
+        name = oAuth2UserInfo.name
+        imageUrl = oAuth2UserInfo.imageUrl
+    }
 }

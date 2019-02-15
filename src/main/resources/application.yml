@@ -17,8 +17,8 @@ spring:
         client:
           registration:
             google:
-              clientId: 5014057553-8gm9um6vnli3cle5rgigcdjpdrid14m9.apps.googleusercontent.com
-              clientSecret: tWZKVLxaD_ARWsriiiUFYoIk
+              clientId: 495031957674-f3p6ee7v72q8a23u9456guj1c4pja89r.apps.googleusercontent.com
+              clientSecret: x0bWsOnYkXnkimrBhD41MzGC
               redirectUriTemplate: "{baseUrl}/oauth2/callback/{registrationId}"
               scope:
                 - email
@@ -37,11 +37,41 @@ spring:
               scope:
                 - user:email
                 - read:user
+            naver:
+              clientName: naver
+              clientId: q8ipGp6TSzmlPEvCzZ8P
+              clientSecret: c5XcAtIluy
+              authorization-grant-type: authorization_code
+              redirectUriTemplate: "{baseUrl}/oauth2/callback/{registrationId}"
+              scope:
+                - email
+                - profile_image
+            kakao:
+              clientName: kakao
+              clientId: a83f63075460d19c3b586dad41d0032e
+              clientSecret: c5XcAtIluy
+              authorization-grant-type: authorization_code
+              redirectUriTemplate: "{baseUrl}/oauth2/callback/{registrationId}"
+              client-authentication-method: POST
+              scope:
+                - account_email
+                - profile
           provider:
             facebook:
               authorizationUri: https://www.facebook.com/v3.0/dialog/oauth
               tokenUri: https://graph.facebook.com/v3.0/oauth/access_token
               userInfoUri: https://graph.facebook.com/v3.0/me?fields=id,first_name,middle_name,last_name,name,email,verified,is_verified,picture.width(250).height(250)
+            naver:
+              authorizationUri: https://nid.naver.com/oauth2.0/authorize
+              tokenUri: https://nid.naver.com/oauth2.0/token
+              userInfoUri: https://openapi.naver.com/v1/nid/me
+              user-name-attribute:
+                - response: name:name
+            kakao:
+              authorizationUri: https://kauth.kakao.com/oauth/authorize
+              tokenUri: https://kauth.kakao.com/oauth/token
+              userInfoUri: https://kapi.kakao.com/v2/user/me
+              user-name-attribute: id
 app:
   auth:
     tokenSecret: 926D96C90030DD58429D2751AC1BDBBC

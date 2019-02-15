@@ -36,7 +36,7 @@ class SecurityConfig(
 ) : WebSecurityConfigurerAdapter() {
 
     @Bean
-    fun tokenAuthenticationFilter(): TokenAuthenticationFilter = TokenAuthenticationFilter()
+    fun tokenAuthenticationFilter() = TokenAuthenticationFilter()
 
     /*
       By default, Spring OAuth2 uses HttpSessionOAuth2AuthorizationRequestRepository to save

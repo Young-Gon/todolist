@@ -1,9 +1,9 @@
 package com.gondev.todolist.security.oauth2.user
 
-class GithubOAuth2UserInfo(attributes: MutableMap<String, Any>) : OAuth2UserInfo(attributes) {
+class NaverOAuth2UserInfo(attributes: MutableMap<String, Any>) : OAuth2UserInfo(attributes) {
 
     override val id: String
-        get() = (attributes["id"] as Int).toString()
+        get() = attributes["id"].toString()
 
     override val name: String
         get() = attributes["name"] as String
@@ -12,5 +12,5 @@ class GithubOAuth2UserInfo(attributes: MutableMap<String, Any>) : OAuth2UserInfo
         get() = attributes["email"] as String
 
     override val imageUrl: String
-        get() = attributes["avatar_url"] as String
+        get() = attributes["profile_image"] as String
 }

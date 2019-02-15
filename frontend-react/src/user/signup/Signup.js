@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import './Signup.css';
 import { Link, Redirect } from 'react-router-dom'
-import { GOOGLE_AUTH_URL, FACEBOOK_AUTH_URL, GITHUB_AUTH_URL } from '../../constants';
+import { GOOGLE_AUTH_URL, FACEBOOK_AUTH_URL, NAVER_AUTH_URL, KAKAO_AUTH_URL } from '../../constants';
 import { signup } from '../../util/APIUtils';
 import fbLogo from '../../img/fb-logo.png';
 import googleLogo from '../../img/google-logo.png';
-import githubLogo from '../../img/github-logo.png';
+import naverLogo from '../../img/naver-logo.png';
+import kakaoLogo from '../../img/kakao-logo.png';
 import Alert from 'react-s-alert';
 
 class Signup extends Component {
@@ -43,8 +44,10 @@ class SocialSignup extends Component {
                     <img src={googleLogo} alt="Google" /> Sign up with Google</a>
                 <a className="btn btn-block social-btn facebook" href={FACEBOOK_AUTH_URL}>
                     <img src={fbLogo} alt="Facebook" /> Sign up with Facebook</a>
-                <a className="btn btn-block social-btn github" href={GITHUB_AUTH_URL}>
-                    <img src={githubLogo} alt="Github" /> Sign up with Github</a>
+                <a className="btn btn-block social-btn facebook" href={NAVER_AUTH_URL}>
+                    <img src={naverLogo} alt="Github" /> Sign up with naver</a>
+                <a className="btn btn-block social-btn facebook" href={KAKAO_AUTH_URL}>
+                    <img src={kakaoLogo} alt="Github" /> Sign up with kakao</a>
             </div>
         );
     }
