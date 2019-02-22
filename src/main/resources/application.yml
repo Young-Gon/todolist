@@ -49,7 +49,6 @@ spring:
             kakao:
               clientName: kakao
               clientId: a83f63075460d19c3b586dad41d0032e
-              clientSecret: c5XcAtIluy
               authorization-grant-type: authorization_code
               redirectUriTemplate: "{baseUrl}/oauth2/callback/{registrationId}"
               client-authentication-method: POST
