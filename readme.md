@@ -144,6 +144,7 @@ vue.js나 react.js를 프론트단으로 하고 spring boot를 rest API서버로
    npm intall
    ```
 3. frontend-react 서버 기동
+
 	![intellij 기동](./img/screenshot3.png)
 	```
 	intellij IDE 내부에서
@@ -160,6 +161,7 @@ vue.js나 react.js를 프론트단으로 하고 spring boot를 rest API서버로
    npm intall
    ```
 3. frontend-vue 서버 기동
+
 	![intellij 기동](./img/screenshot4.png)
 	```
 	intellij IDE 내부에서
