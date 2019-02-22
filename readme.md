@@ -3,16 +3,7 @@ spring 2.0을 사용하고 소셜로그인(네이버, 다음, 구글, 페이스�
 
 vue.js나 react.js를 프론트단으로 하고 spring boot를 rest API서버로 사용하고 있습니다
 
-
-```mermaid
-sequenceDiagram
-Vue.js or React.js ->> Rest API Server (Spring Boot 2.0): Request
-Rest API Server (Spring Boot 2.0) -->> JPA: 
-JPA --> DB: CRUD
-DB --> JPA: Result
-JAP --> Rest API Server (Spring Boot 2.0): Model 
-Rest API Server (Spring Boot 2.0) -->> Vue.js or React.js: Json Response
-```
+![sequence diagram](/img/mermaid-diagram-20190222152903.svg)
 
 ##목표
 
