@@ -61,7 +61,6 @@ vue.js나 react.js를 프론트단으로 하고 spring boot를 rest API서버로
 	        password: <YOUR_DB_PASSWORD>
 	```
 
-+ **Specify OAuth2 Provider ClientId's and ClientSecrets**
 + **클라이언트 ID와 클라이언트 시크릿 설정**
 	
 	```yml
