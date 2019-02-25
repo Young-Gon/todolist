@@ -1,4 +1,4 @@
-#TodoList
+# TodoList
 spring 2.0을 사용하고 소셜로그인(네이버, 다음, 구글, 페이스북) 인증을 구현한 데모 엡입니다.
 
 vue.js나 react.js를 프론트단으로 하고 spring boot를 rest API서버로 사용하고 있습니다
@@ -13,7 +13,7 @@ vue.js나 react.js를 프론트단으로 하고 spring boot를 rest API서버로
    > 프론트엔드 서버는 UI를 담당하며 벡엔드서버와 Rest API 통신을 합니다
  
 
-##목표
+## 목표
 
 - Spring 2.0를 사용하여 Rest API 서버 구현
 - JPA를 사용하여 디비 쿼리
@@ -69,7 +69,6 @@ vue.js나 react.js를 프론트단으로 하고 spring boot를 rest API서버로
 	        password: <YOUR_DB_PASSWORD>
 	```
 
-+ **Specify OAuth2 Provider ClientId's and ClientSecrets**
 + **클라이언트 ID와 클라이언트 시크릿 설정**
 	
 	```yml
@@ -152,6 +151,7 @@ vue.js나 react.js를 프론트단으로 하고 spring boot를 rest API서버로
    npm intall
    ```
 3. frontend-react 서버 기동
+
 	![intellij 기동](./img/screenshot3.png)
 	```
 	intellij IDE 내부에서
@@ -168,6 +168,7 @@ vue.js나 react.js를 프론트단으로 하고 spring boot를 rest API서버로
    npm intall
    ```
 3. frontend-vue 서버 기동
+
 	![intellij 기동](./img/screenshot4.png)
 	```
 	intellij IDE 내부에서
