@@ -9,8 +9,8 @@ vue.js나 react.js를 프론트단으로 하고 spring boot를 rest API서버로
 * 구조
 ![sequence diagram](./img/mermaid-diagram-20190222152903.svg)
 
-> 이 프로젝트는 백엔드 서버와 프론트엔드 서버로 구성되어 있습니다<br>
-> 프론트엔드 서버는 UI를 담당하며 벡엔드서버와 Rest API 통신을 합니다
+   > 이 프로젝트는 백엔드 서버와 프론트엔드 서버로 구성되어 있습니다<br>
+   > 프론트엔드 서버는 UI를 담당하며 벡엔드서버와 Rest API 통신을 합니다
  
 
 ##목표
@@ -28,12 +28,20 @@ vue.js나 react.js를 프론트단으로 하고 spring boot를 rest API서버로
 - Intellij IDE 기반
 - React.js
 - Vue.js 2.0
+- Vue CLI 3.0
 - Spring boot 2.0
-- kotlin
+- Kotlin for backend
+- React JAX for frontend
 - Spring Data JPA
 - Spring Security Oauth2 client
    > **Note:** Spring Security Oauth2 client는 spring boot 2.0에서 새로 도입된 기술이며 1.5에서 사용하는 Oauth2Client와는 다른 기술입니다 
 - MySQL
+
+## 요구사항
+1. [JAVA SDK 1.8 (권장 1.9)](https://www.oracle.com/technetwork/java/javase/downloads/jdk11-downloads-5066655.html)
+2. [IntelliJ Community 또는 Ultimate](https://www.jetbrains.com/idea/download/#section=windows)
+3. [MySQL](https://www.mysql.com/downloads/)
+4. [Node.js](https://nodejs.org/ko/)
 
 ## 프로젝트 구성 및 빌드
 이 프로젝트는 3개의 하위 프로젝트를 가집니다
@@ -139,7 +147,7 @@ vue.js나 react.js를 프론트단으로 하고 spring boot를 rest API서버로
 ### frontend-react 설정
 1. [Node.js](https://nodejs.org/ko/) 설치
 2. 라이브러리 설치
-   ```
+   ```bash
    cd frontend-react
    npm intall
    ```
@@ -154,7 +162,7 @@ vue.js나 react.js를 프론트단으로 하고 spring boot를 rest API서버로
 ### frontend-vue 설정
 1. [Node.js](https://nodejs.org/ko/) 설치
 2. 라이브러리 설치
-   ```
+   ```bash
    npm install -g @vue/cli
    cd frontend-vue
    npm intall
