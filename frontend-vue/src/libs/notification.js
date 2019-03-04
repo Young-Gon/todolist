@@ -14,7 +14,7 @@ export default {
             vue.$notify({
                 group: 'noti',
                 type: 'error',
-                title: err.response.state,
+                title: error.response.state,
                 text: error.response.data.message,
             });
             block();

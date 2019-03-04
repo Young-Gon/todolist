@@ -5,7 +5,6 @@ import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.oauth2.core.user.OAuth2User
-import java.util.Collections
 
 data class UserPrincipal(
         val id: Long,
@@ -37,8 +36,8 @@ data class UserPrincipal(
     companion object {
 
         fun create(user: User): UserPrincipal = UserPrincipal(
-                user.id!!,
-                user.email!!,
+                user.id,
+                user.email,
                 user.password,
                 listOf<GrantedAuthority>(SimpleGrantedAuthority("ROLE_USER"))
         )

@@ -5,7 +5,7 @@ import com.gondev.todolist.model.AuthProvider
 import com.gondev.todolist.model.User
 import com.gondev.todolist.repository.UserRepository
 import com.gondev.todolist.repository.create
-import com.gondev.todolist.repository.save
+import com.gondev.todolist.repository.update
 import com.gondev.todolist.security.UserPrincipal
 import com.gondev.todolist.security.oauth2.user.*
 import org.springframework.security.authentication.InternalAuthenticationServiceException
@@ -43,17 +43,15 @@ class CustomOAuth2UserService(
         }
 
         val userOptional = userRepository.findByEmail(oAuth2UserInfo.email)
-        var user: User
-        if (userOptional.isPresent) {
-            user = userOptional.get()
+        val user=userOptional.map { user ->
             if (user.provider != AuthProvider.valueOf(oAuth2UserRequest.clientRegistration.registrationId)) {
                 throw OAuth2AuthenticationProcessingException("Looks like you're signed up with " +
                         user.provider + " account. Please use your " + user.provider +
                         " account to login.")
             }
-            user = updateExistingUser(user, oAuth2UserInfo)
-        } else {
-            user = registerNewUser(oAuth2UserRequest, oAuth2UserInfo)
+            updateExistingUser(user, oAuth2UserInfo)
+        }.orElseGet {
+            registerNewUser(oAuth2UserRequest, oAuth2UserInfo)
         }
 
         if(oAuth2UserRequest.clientRegistration.registrationId.equals(AuthProvider.naver.toString(),false))
@@ -71,7 +69,7 @@ class CustomOAuth2UserService(
         else -> throw OAuth2AuthenticationProcessingException("Sorry! Login with $registrationId is not supported yet.")
     }
 
-    private fun registerNewUser(oAuth2UserRequest: OAuth2UserRequest, oAuth2UserInfo: OAuth2UserInfo)=userRepository.create {
+    private fun registerNewUser(oAuth2UserRequest: OAuth2UserRequest, oAuth2UserInfo: OAuth2UserInfo) = userRepository.create {
         provider = AuthProvider.valueOf(oAuth2UserRequest.clientRegistration.registrationId)
         providerId = oAuth2UserInfo.id
         name = oAuth2UserInfo.name
@@ -79,7 +77,7 @@ class CustomOAuth2UserService(
         imageUrl = oAuth2UserInfo.imageUrl
     }
 
-    private fun updateExistingUser(existingUser: User, oAuth2UserInfo: OAuth2UserInfo): User = userRepository.save(existingUser) {
+    private fun updateExistingUser(existingUser: User, oAuth2UserInfo: OAuth2UserInfo) = userRepository.update(existingUser) {
         name = oAuth2UserInfo.name
         imageUrl = oAuth2UserInfo.imageUrl
     }

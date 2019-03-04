@@ -9,12 +9,12 @@ import javax.validation.constraints.NotBlank
 
 data class SignUpRequest (
     @NotBlank
-    var name: String? = null,
+    var name: String,
 
     @NotBlank
     @Email
-    var email: String? = null,
+    var email: String,
 
     @NotBlank
-    var password: String? = null
+    var password: String
 )
