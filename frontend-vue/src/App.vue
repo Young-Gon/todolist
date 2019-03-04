@@ -7,10 +7,10 @@
 </template>
 
 <script>
-  import appHeader from './components/header.vue';
-  import notification from './libs/notification';
+    import appHeader from './components/header.vue';
+    import notification from './libs/notification';
 
-export default {
+    export default {
   name: 'app',
   created(){
     console.log("create app");
@@ -49,6 +49,7 @@ export default {
 </script>
 
 <style>
+
   * {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
