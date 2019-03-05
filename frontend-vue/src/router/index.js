@@ -6,6 +6,7 @@ import Profile from '../components/profile';
 import NotFound from '../components/notFound';
 import Login from '../components/user/login';
 import Signup from '../components/user/signup';
+import FileUpload from '../components/fileUpload';
 import Oauth2redirect from '../components/oauth2/oauth2redirect';
 
 Vue.use(Router);
@@ -38,6 +39,11 @@ export default new Router({
       path: '/oauth2/redirect',
       name: 'Oauth2redirect',
       component: Oauth2redirect
+    },
+    {
+      path: '/fileUpload',
+      name: 'FileUpload',
+      component: FileUpload
     },
     {
       path: '*',

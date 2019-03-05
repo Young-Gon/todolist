@@ -1,4 +1,9 @@
 spring:
+    servlet:
+      multipart:
+        file-size-threshold: 2KB
+        max-file-size: 200MB
+        max-request-size: 215MB
     datasource:
         url: jdbc:mysql://localhost:3306/spring_social?useSSL=false&serverTimezone=UTC
         username: root

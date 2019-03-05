@@ -1,14 +1,12 @@
 package com.gondev.todolist.config
 
-import com.gondev.todolist.security.*
+import com.gondev.todolist.security.CustomUserDetailsService
+import com.gondev.todolist.security.RestAuthenticationEntryPoint
+import com.gondev.todolist.security.TokenAuthenticationFilter
 import com.gondev.todolist.security.oauth2.CustomOAuth2UserService
 import com.gondev.todolist.security.oauth2.HttpCookieOAuth2AuthorizationRequestRepository
 import com.gondev.todolist.security.oauth2.OAuth2AuthenticationFailureHandler
 import com.gondev.todolist.security.oauth2.OAuth2AuthenticationSuccessHandler
-import com.gondev.todolist.security.CustomUserDetailsService
-import com.gondev.todolist.security.RestAuthenticationEntryPoint
-import com.gondev.todolist.security.TokenAuthenticationFilter
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager
@@ -21,8 +19,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
-import org.springframework.security.oauth2.client.web.AuthorizationRequestRepository
-import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 
 @Configuration
@@ -91,7 +87,8 @@ class SecurityConfig(
                         "/**/*.css",
                         "/**/*.js")
                 .permitAll()
-                .antMatchers("/auth/**", "/oauth2/**")
+                .antMatchers("/auth/**", "/oauth2/**",
+                        "/downloadFile/**", "/uploadMultipleFiles/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
