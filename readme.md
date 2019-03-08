@@ -5,7 +5,6 @@ vue.js나 react.js를 프론트단으로 하고 spring boot를 rest API서버로
 
 ![screenshot](./img/screenshot1.png)
 
-
 * 구조
 ![sequence diagram](./img/mermaid-diagram-20190222152903.svg)
 
