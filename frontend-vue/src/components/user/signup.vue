@@ -42,9 +42,9 @@
 </template>
 
 <script>
-import notification from '../../libs/notification';
+	import notification from '../../libs/notification';
 
-const getOauthUrl =(platfrom) => {
+	const getOauthUrl =(platfrom) => {
     return `${process.env.VUE_APP_API}/oauth2/authorize/${platfrom}?redirect_uri=${process.env.VUE_APP_ORIGIN}${process.env.VUE_APP_OAUTH2_REDIRECT_URI}`
 };
 
@@ -62,9 +62,6 @@ export default {
         }
     }),
     methods: {
-        getOauthUrl(platfrom) {
-            return `/oauth2/authorize/${platfrom}?redirect_uri=${process.env.VUE_APP_ORIGIN}${process.env.OAUTH2_REDIRECT_URI}`
-        },
         async signup() {
             try{
                 const response = await this.axios.post('/auth/signup', this.user);

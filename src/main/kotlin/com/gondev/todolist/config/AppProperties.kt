@@ -1,8 +1,7 @@
 package com.gondev.todolist.config
 
 import org.springframework.boot.context.properties.ConfigurationProperties
-
-import java.util.ArrayList
+import java.util.*
 
 @ConfigurationProperties(prefix = "app")
 class AppProperties {
@@ -17,10 +16,5 @@ class AppProperties {
     class OAuth2 {
         var authorizedRedirectUris: List<String> = ArrayList()
             private set
-
-        fun authorizedRedirectUris(authorizedRedirectUris: List<String>): OAuth2 {
-            this.authorizedRedirectUris = authorizedRedirectUris
-            return this
-        }
     }
 }
