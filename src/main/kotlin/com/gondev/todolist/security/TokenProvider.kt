@@ -2,15 +2,16 @@ package com.gondev.todolist.security
 
 import com.gondev.todolist.config.AppProperties
 import io.jsonwebtoken.*
-import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Service
-
-import java.util.Date
+import java.util.*
 
 @Service
-class TokenProvider(private val appProperties: AppProperties) {
+class TokenProvider(
+        private val appProperties: AppProperties
+) {
+    private val logger = LoggerFactory.getLogger(TokenProvider::class.java)
 
     fun createToken(authentication: Authentication): String {
         val userPrincipal = authentication.principal as UserPrincipal
@@ -19,7 +20,7 @@ class TokenProvider(private val appProperties: AppProperties) {
         val expiryDate = Date(now.time + appProperties.auth.tokenExpirationMsec)
 
         return Jwts.builder()
-                .setSubject(java.lang.Long.toString(userPrincipal.id))
+                .setSubject(userPrincipal.id.toString())
                 .setIssuedAt(Date())
                 .setExpiration(expiryDate)
                 .signWith(SignatureAlgorithm.HS512, appProperties.auth.tokenSecret)
@@ -32,7 +33,7 @@ class TokenProvider(private val appProperties: AppProperties) {
                 .parseClaimsJws(token)
                 .body
 
-        return java.lang.Long.parseLong(claims.subject)
+        return claims.subject.toLong()
     }
 
     fun validateToken(authToken: String): Boolean {
@@ -53,10 +54,4 @@ class TokenProvider(private val appProperties: AppProperties) {
 
         return false
     }
-
-    companion object {
-
-        private val logger = LoggerFactory.getLogger(TokenProvider::class.java)
-    }
-
 }

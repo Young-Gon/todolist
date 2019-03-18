@@ -10,7 +10,7 @@
   import appHeader from './components/header.vue';
   import notification from './libs/notification';
 
-export default {
+  export default {
   name: 'app',
   created(){
     console.log("create app");
@@ -23,7 +23,7 @@ export default {
     async getUserDetails() {
       try {
         const token = this.$store.getters.token;
-        if (token==='null' || token ==='')
+        if (token==null || token==='null' || token ==='')
           return;
         console.log('token='+token);
 
@@ -49,6 +49,7 @@ export default {
 </script>
 
 <style>
+
   * {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;

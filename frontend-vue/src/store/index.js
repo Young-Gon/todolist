@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-import { setHeader } from '../libs/axios.custom';
+import {setHeader} from '../libs/axios.custom';
 
 Vue.use(Vuex);
 
@@ -19,8 +19,7 @@ export default new Vuex.Store({
   state: {
     authenticated: false,
     token: null,
-    currentUser: null,
-    loading: false
+    currentUser: null
   },
 
   getters: {
@@ -45,7 +44,6 @@ export default new Vuex.Store({
     setUserDetail(state, payload) {
       state.currentUser = payload;
       state.authenticated = payload !== null;
-      state.loading=false;
     },
   },
 

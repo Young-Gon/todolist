@@ -71,64 +71,65 @@ vue.js나 react.js를 프론트단으로 하고 spring boot를 rest API서버로
 + **클라이언트 ID와 클라이언트 시크릿 설정**
 	
 	```yml
-    security:
-      oauth2:
-        client:
-          registration:
-            google:
-              clientId: <GOOGLE_CLIENT_ID>
-              clientSecret: <GOOGLE_CLIENT_SECRET>
-              redirectUriTemplate: "{baseUrl}/oauth2/callback/{registrationId}"
-              scope:
-                - email
-                - profile
-            facebook:
-              clientId: <FACEBOOK_CLIENT_ID>
-              clientSecret: <FACEBOOK_CLIENT_SECRET>
-              redirectUriTemplate: "{baseUrl}/oauth2/callback/{registrationId}"
-              scope:
-                - email
-                - public_profile
-            github:
-              clientId: <GITHUB_CLIENT_ID>
-              clientSecret: <GITHUB_CLIENT_SECRET>
-              redirectUriTemplate: "{baseUrl}/oauth2/callback/{registrationId}"
-              scope:
-                - user:email
-                - read:user
-            naver:
-              clientName: naver
-              clientId: <NAVER_CLIENT_ID>
-              clientSecret: <NAVER_CLIENT_SECRET>
-              authorization-grant-type: authorization_code
-              redirectUriTemplate: "{baseUrl}/oauth2/callback/{registrationId}"
-              scope:
-                - email
-                - profile_image
-            kakao:
-              clientName: kakao
-              clientId: <KAKAO_CLIENT_ID>
-              authorization-grant-type: authorization_code
-              redirectUriTemplate: "{baseUrl}/oauth2/callback/{registrationId}"
-              client-authentication-method: POST
-              scope:
-                - account_email
-                - profile
-          provider:
-            facebook:
-              authorizationUri: https://www.facebook.com/v3.0/dialog/oauth
-              tokenUri: https://graph.facebook.com/v3.0/oauth/access_token
-              userInfoUri: https://graph.facebook.com/v3.0/me?fields=id,first_name,middle_name,last_name,name,email,verified,is_verified,picture.width(250).height(250)
-            naver:
-              authorizationUri: https://nid.naver.com/oauth2.0/authorize
-              tokenUri: https://nid.naver.com/oauth2.0/token
-              userInfoUri: https://openapi.naver.com/v1/nid/me
-              user-name-attribute: response
-            kakao:
-              authorizationUri: https://kauth.kakao.com/oauth/authorize
-              tokenUri: https://kauth.kakao.com/oauth/token
-              userInfoUri: https://kapi.kakao.com/v2/user/me
-              user-name-attribute: id
+	spring:
+      security:
+        oauth2:
+          client:
+            registration:
+              google:
+                clientId: <GOOGLE_CLIENT_ID>
+                clientSecret: <GOOGLE_CLIENT_SECRET>
+                redirectUriTemplate: "{baseUrl}/oauth2/callback/{registrationId}"
+                scope:
+                  - email
+                  - profile
+              facebook:
+                clientId: <FACEBOOK_CLIENT_ID>
+                clientSecret: <FACEBOOK_CLIENT_SECRET>
+                redirectUriTemplate: "{baseUrl}/oauth2/callback/{registrationId}"
+                scope:
+                  - email
+                  - public_profile
+              github:
+                clientId: <GITHUB_CLIENT_ID>
+                clientSecret: <GITHUB_CLIENT_SECRET>
+                redirectUriTemplate: "{baseUrl}/oauth2/callback/{registrationId}"
+                scope:
+                  - user:email
+                  - read:user
+              naver:
+                clientName: naver
+                clientId: <NAVER_CLIENT_ID>
+                clientSecret: <NAVER_CLIENT_SECRET>
+                authorization-grant-type: authorization_code
+                redirectUriTemplate: "{baseUrl}/oauth2/callback/{registrationId}"
+                scope:
+                  - email
+                  - profile_image
+              kakao:
+                clientName: kakao
+                clientId: <KAKAO_CLIENT_ID>
+                authorization-grant-type: authorization_code
+                redirectUriTemplate: "{baseUrl}/oauth2/callback/{registrationId}"
+                client-authentication-method: POST
+                scope:
+                  - account_email
+                  - profile
+            provider:
+              facebook:
+                authorizationUri: https://www.facebook.com/v3.0/dialog/oauth
+                tokenUri: https://graph.facebook.com/v3.0/oauth/access_token
+                userInfoUri: https://graph.facebook.com/v3.0/me?fields=id,first_name,middle_name,last_name,name,email,verified,is_verified,picture.width(250).height(250)
+              naver:
+                authorizationUri: https://nid.naver.com/oauth2.0/authorize
+                tokenUri: https://nid.naver.com/oauth2.0/token
+                userInfoUri: https://openapi.naver.com/v1/nid/me
+                user-name-attribute: response
+              kakao:
+                authorizationUri: https://kauth.kakao.com/oauth/authorize
+                tokenUri: https://kauth.kakao.com/oauth/token
+                userInfoUri: https://kapi.kakao.com/v2/user/me
+                user-name-attribute: id
 	```
 
 	> 클라이언트 ID와 시크릿은 각 Oauth2 인증 사이트에서 발급 받으실 수 있으며, 본 프로젝트에서는 바로 테스트할 수 있도록 클라이언트 ID와 시크릿이 포함되어 있습니다  

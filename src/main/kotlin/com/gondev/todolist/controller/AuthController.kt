@@ -61,7 +61,7 @@ class AuthController(
 
         val location = ServletUriComponentsBuilder
                 .fromCurrentContextPath().path("/user/me")
-                .build().toUri()
+                .buildAndExpand(result.id).toUri()
 
         return ResponseEntity.created(location)
                 .body(ApiResponse(true, "User registered successfully@"))

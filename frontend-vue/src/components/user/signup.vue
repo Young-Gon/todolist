@@ -38,7 +38,6 @@
             <span class="login-link">Already have an account? <router-link to="/login">Login!</router-link></span>
         </div>
     </div>
-    
 </template>
 
 <script>

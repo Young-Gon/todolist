@@ -14,7 +14,7 @@ export default {
             this.$store.commit('setToken', token);
 
             //this.$router.push("/profile")
-            // push를 사용할 경우 history에 남아서 back을 누를 경우 이 페이지로 돌아올수 있다
+            // push를 사용할 경우 history에 남아서 back을 누를 경우 이 페이지로 돌아올 수 있다
             this.$emit('getUserDetails');
             this.$router.replace('/profile')
         }

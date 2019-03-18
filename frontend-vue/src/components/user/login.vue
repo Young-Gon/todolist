@@ -33,13 +33,12 @@
             <span class="signup-link">New user? <router-link to="/signup">Sign up!</router-link></span>
         </div>
     </div>
-    
 </template>
 
 <script>
-    import notification from '../../libs/notification';
+	import notification from '../../libs/notification';
 
-const getOauthUrl =(platfrom) => {
+	const getOauthUrl =(platfrom) => {
     return `${process.env.VUE_APP_API}/oauth2/authorize/${platfrom}?redirect_uri=${process.env.VUE_APP_ORIGIN}${process.env.VUE_APP_OAUTH2_REDIRECT_URI}`
 };
 
@@ -65,14 +64,21 @@ export default {
                     this.$router.replace('/profile')
                 });
             }catch (err) {
-                err.response.data.errors.forEach((error) => {
+                /*err.response.data.errors.forEach((error) => {
                     this.$notify({
                         group: 'noti',
                         type: 'error',
                         duration: 6000,
                         text: error.defaultMessage,
                     });
-                });
+                });*/
+	            this.$notify({
+		            group: 'noti',
+		            type: 'error',
+		            duration: 6000,
+		            title: err.response.state,
+		            text: err.response.data.message,
+	            });
             }
         }
     }
@@ -83,7 +89,6 @@ export default {
     .login-container {
         text-align: center;
     }
-
 
     .login-content {
         background: #fff;

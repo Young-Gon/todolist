@@ -1,59 +1,38 @@
 package com.gondev.todolist.util
 
 import org.springframework.util.SerializationUtils
+import java.util.*
 import javax.servlet.http.Cookie
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
-import java.util.Base64
-import java.util.Optional
 
 object CookieUtils {
 
-    fun getCookie(request: HttpServletRequest, name: String): Optional<Cookie> {
-        val cookies = request.cookies
+    fun getCookie(request: HttpServletRequest, name: String): Cookie? =
+            request.cookies.find { cookie ->
+        cookie.name==name
+    }
 
-        if (cookies != null && cookies.size > 0) {
-            for (cookie in cookies) {
-                if (cookie.name == name) {
-                    return Optional.of(cookie)
-                }
-            }
+    fun addCookie(response: HttpServletResponse, name: String, value: String, maxAge: Int) =
+            response.addCookie(Cookie(name, value).apply {
+                path = "/"
+                isHttpOnly = true
+                this.maxAge = maxAge
+            })
+
+    fun deleteCookie(request: HttpServletRequest, response: HttpServletResponse, name: String) =
+        request.cookies?.filter { cookie ->
+            cookie.name==name
+        }?.forEach { cookie: Cookie ->
+            cookie.value = ""
+            cookie.path = "/"
+            cookie.maxAge = 0
+            response.addCookie(cookie)
         }
 
-        return Optional.empty()
-    }
+    fun serialize(obj: Any): String =
+            Base64.getUrlEncoder().encodeToString(SerializationUtils.serialize(obj))
 
-    fun addCookie(response: HttpServletResponse, name: String, value: String, maxAge: Int) {
-        val cookie = Cookie(name, value)
-        cookie.path = "/"
-        cookie.isHttpOnly = true
-        cookie.maxAge = maxAge
-        response.addCookie(cookie)
-    }
-
-    fun deleteCookie(request: HttpServletRequest, response: HttpServletResponse, name: String) {
-        val cookies = request.cookies
-        if (cookies != null && cookies.size > 0) {
-            for (cookie in cookies) {
-                if (cookie.name == name) {
-                    cookie.value = ""
-                    cookie.path = "/"
-                    cookie.maxAge = 0
-                    response.addCookie(cookie)
-                }
-            }
-        }
-    }
-
-    fun serialize(`object`: Any): String {
-        return Base64.getUrlEncoder()
-                .encodeToString(SerializationUtils.serialize(`object`))
-    }
-
-    fun <T> deserialize(cookie: Cookie, cls: Class<T>): T? {
-        return cls.cast(SerializationUtils.deserialize(
-                Base64.getUrlDecoder().decode(cookie.value)))
-    }
-
-
+    fun <T> deserialize(cookie: Cookie, cls: Class<T>): T? =
+            cls.cast(SerializationUtils.deserialize(Base64.getUrlDecoder().decode(cookie.value)))
 }

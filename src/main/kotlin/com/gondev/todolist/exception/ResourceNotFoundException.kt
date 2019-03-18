@@ -8,4 +8,4 @@ class ResourceNotFoundException(
         resourceName: String,
         fieldName: String,
         fieldValue: Any
-) : RuntimeException(String.format("%s not found with %s : '%s'", resourceName, fieldName, fieldValue))
+) : RuntimeException("$resourceName not found with $fieldName : '$fieldValue'")

@@ -13,17 +13,15 @@ import javax.servlet.http.HttpServletResponse
 class HttpCookieOAuth2AuthorizationRequestRepository : AuthorizationRequestRepository<OAuth2AuthorizationRequest> {
 
     companion object {
-        val OAUTH2_AUTHORIZATION_REQUEST_COOKIE_NAME = "oauth2_auth_request"
-        val REDIRECT_URI_PARAM_COOKIE_NAME = "redirect_uri"
-        private val cookieExpireSeconds = 180
+        const val OAUTH2_AUTHORIZATION_REQUEST_COOKIE_NAME = "oauth2_auth_request"
+        const val REDIRECT_URI_PARAM_COOKIE_NAME = "redirect_uri"
+        private const val cookieExpireSeconds = 180
     }
 
     override fun loadAuthorizationRequest(request: HttpServletRequest) =
-        CookieUtils.getCookie(request, OAUTH2_AUTHORIZATION_REQUEST_COOKIE_NAME)
-                .map { cookie ->
-                    CookieUtils.deserialize(cookie, OAuth2AuthorizationRequest::class.java)
-                }
-                .orElse(null)
+        CookieUtils.getCookie(request, OAUTH2_AUTHORIZATION_REQUEST_COOKIE_NAME)?.let { cookie ->
+            CookieUtils.deserialize(cookie, OAuth2AuthorizationRequest::class.java)
+        }
 
     override fun saveAuthorizationRequest(authorizationRequest: OAuth2AuthorizationRequest?, request: HttpServletRequest, response: HttpServletResponse) {
         if (authorizationRequest == null) {

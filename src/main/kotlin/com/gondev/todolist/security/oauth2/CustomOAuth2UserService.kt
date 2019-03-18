@@ -45,9 +45,9 @@ class CustomOAuth2UserService(
         val userOptional = userRepository.findByEmail(oAuth2UserInfo.email)
         val user=userOptional.map { user ->
             if (user.provider != AuthProvider.valueOf(oAuth2UserRequest.clientRegistration.registrationId)) {
-                throw OAuth2AuthenticationProcessingException("Looks like you're signed up with " +
-                        user.provider + " account. Please use your " + user.provider +
-                        " account to login.")
+                throw OAuth2AuthenticationProcessingException("""Looks like you're signed up with
+                        | ${user.provider} account. Please use your ${user.provider}
+                        | account to login.""")
             }
             updateExistingUser(user, oAuth2UserInfo)
         }.orElseGet {
@@ -55,9 +55,9 @@ class CustomOAuth2UserService(
         }
 
         if(oAuth2UserRequest.clientRegistration.registrationId.equals(AuthProvider.naver.toString(),false))
-            return UserPrincipal.create(user, oAuth2User.attributes["response"] as MutableMap<String, Any>)
+            return UserPrincipal(user, oAuth2User.attributes["response"] as MutableMap<String, Any>)
 
-        return UserPrincipal.create(user, oAuth2User.attributes)
+        return UserPrincipal(user, oAuth2User.attributes)
     }
 
     private fun getOAuth2UserInfo(registrationId: String, attributes: MutableMap<String, Any>) =

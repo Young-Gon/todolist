@@ -10,10 +10,17 @@ data class UserPrincipal(
         val id: Long,
         val email: String,
         private val password: String?,
-        private val authorities: Collection<GrantedAuthority>
+        private val authorities: Collection<GrantedAuthority>,
+        private val attributes: MutableMap<String, Any>? = null
 ) : OAuth2User, UserDetails {
 
-    private var attributes: MutableMap<String, Any>? = null
+    constructor(user: User, attributes: MutableMap<String, Any>?=null) : this(
+            user.id,
+            user.email,
+            user.password,
+            listOf(SimpleGrantedAuthority("ROLE_USER")),
+            attributes
+    )
 
     override fun getName() = id.toString()
 
@@ -32,19 +39,4 @@ data class UserPrincipal(
     override fun getAuthorities(): Collection<GrantedAuthority> = authorities
 
     override fun getAttributes(): MutableMap<String, Any>? = attributes
-
-    companion object {
-
-        fun create(user: User): UserPrincipal = UserPrincipal(
-                user.id,
-                user.email,
-                user.password,
-                listOf<GrantedAuthority>(SimpleGrantedAuthority("ROLE_USER"))
-        )
-
-        fun create(user: User, attributes: MutableMap<String, Any>): UserPrincipal =
-                UserPrincipal.create(user).apply {
-            this.attributes = attributes
-        }
-    }
 }

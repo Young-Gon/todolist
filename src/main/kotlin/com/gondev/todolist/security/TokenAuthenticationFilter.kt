@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletResponse
 
 class TokenAuthenticationFilter : OncePerRequestFilter() {
 
+    private val log = LoggerFactory.getLogger(TokenAuthenticationFilter::class.java)
+
     @Autowired
     private lateinit var tokenProvider: TokenProvider
 
@@ -36,7 +38,7 @@ class TokenAuthenticationFilter : OncePerRequestFilter() {
                 }
             }
         } catch (ex: Exception) {
-            logger.error("Could not set user authentication in security context", ex)
+            log.error("Could not set user authentication in security context", ex)
         }
 
         filterChain.doFilter(request, response)
@@ -47,10 +49,5 @@ class TokenAuthenticationFilter : OncePerRequestFilter() {
         return if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
             bearerToken.substring(7, bearerToken.length)
         } else null
-    }
-
-    companion object {
-
-        private val logger = LoggerFactory.getLogger(TokenAuthenticationFilter::class.java)
     }
 }
