@@ -1,6 +1,5 @@
 package com.gondev.todolist.controller
 
-import com.gondev.todolist.exception.ResourceNotFoundException
 import com.gondev.todolist.payload.TodoRequest
 import com.gondev.todolist.repository.TodoRepository
 import com.gondev.todolist.repository.UserRepository
@@ -25,10 +24,8 @@ class TodoListController(
     @PreAuthorize("hasRole('USER')")
     fun addTodo(@CurrentUser userPrincipal: UserPrincipal, @Valid @RequestBody todo: TodoRequest) =
             todoRepository.create {
-                user = userRepository.findById(userPrincipal.id)
-                        .orElseThrow {
-                            ResourceNotFoundException("User", "id", userPrincipal.id)
-                        }
+                //user=User(principal.id)
+                user=userPrincipal.toUser()
 
                 content = todo.content
             }
@@ -46,8 +43,7 @@ class TodoListController(
             todoRepository.findByIdAndUserId(todoItemId, userPrincipal.id)?.let {
                 todoRepository.delete(it)
                 ResponseEntity.ok(it)
-            }
-                    ?: throw ResourceAccessException("user ${userPrincipal.email} is not owner of required item(${todoItemId})")
+            } ?: throw ResourceAccessException("user ${userPrincipal.email} is not owner of required item($todoItemId)")
 
     @DeleteMapping("/todolist")
     @PreAuthorize("hasRole('USER')")
