@@ -39,4 +39,6 @@ data class UserPrincipal(
     override fun getAuthorities(): Collection<GrantedAuthority> = authorities
 
     override fun getAttributes(): MutableMap<String, Any>? = attributes
+
+    fun toUser() = User(id)
 }
