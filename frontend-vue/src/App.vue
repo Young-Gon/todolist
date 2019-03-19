@@ -10,7 +10,7 @@
   import appHeader from './components/header.vue';
   import notification from './libs/notification';
 
-  export default {
+export default {
   name: 'app',
   created(){
     console.log("create app");
@@ -49,7 +49,6 @@
 </script>
 
 <style>
-
   * {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;

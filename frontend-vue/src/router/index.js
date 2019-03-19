@@ -6,6 +6,7 @@ import Profile from '../components/profile';
 import NotFound from '../components/notFound';
 import Login from '../components/user/login';
 import Signup from '../components/user/signup';
+import TodoList from '../components/todolist/todoList';
 import Oauth2redirect from '../components/oauth2/oauth2redirect';
 
 Vue.use(Router);
@@ -38,6 +39,11 @@ export default new Router({
       path: '/oauth2/redirect',
       name: 'Oauth2redirect',
       component: Oauth2redirect
+    },
+    {
+      path: '/todolist/list',
+      name: 'TodoList',
+      component: TodoList
     },
     {
       path: '*',
