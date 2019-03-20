@@ -20,12 +20,6 @@ export default new Router({
       component: Home,
     },
     {
-      path: '/profile',
-      name: 'Profile',
-      component: Profile,
-      beforeEnter: auth.isAuthenticated,
-    },
-    {
       path: '/login',
       name: 'login',
       component: Login,
@@ -36,14 +30,22 @@ export default new Router({
       component: Signup,
     },
     {
+      path: '/profile',
+      name: 'Profile',
+      component: Profile,
+      beforeEnter: auth.isAuthenticated,
+    },
+    {
       path: '/oauth2/redirect',
       name: 'Oauth2redirect',
-      component: Oauth2redirect
+      component: Oauth2redirect,
+      beforeEnter: auth.isAuthenticated,
     },
     {
       path: '/todolist/list',
       name: 'TodoList',
-      component: TodoList
+      component: TodoList,
+      beforeEnter: auth.isAuthenticated,
     },
     {
       path: '*',

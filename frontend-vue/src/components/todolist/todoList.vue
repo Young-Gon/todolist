@@ -40,9 +40,9 @@
 </template>
 
 <script>
-    import BottomScroll from 'vue-bottom-scroll-listener'
+	import BottomScroll from 'vue-bottom-scroll-listener'
 
-    export default {
+	export default {
     name: "TodoList",
     components: {
         BottomScroll
@@ -116,9 +116,10 @@
                 console.log(response);
                 if (response.status === 200) {
                     //this.todoItems.push(response.data.content);
-                    this.todoItems.splice(this.todoItems.findIndex(value => {
+                    /*this.todoItems.splice(this.todoItems.findIndex(value => {
                         return value.id===response.data.id
-                    }),1);
+                    }),1);*/
+                    this.todoItems.slice(index)
                 }
             } catch (err) {
                 console.log(err.response.data.message);

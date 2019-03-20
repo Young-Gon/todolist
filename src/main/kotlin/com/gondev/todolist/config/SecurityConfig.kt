@@ -87,7 +87,8 @@ class SecurityConfig(
                         "/**/*.css",
                         "/**/*.js")
                 .permitAll()
-                .antMatchers("/auth/**", "/oauth2/**")
+                .antMatchers("/auth/**", "/oauth2/**",
+                        "/todolist","/todolist/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
