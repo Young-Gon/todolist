@@ -85,7 +85,7 @@ spring:
 spring:
   profiles: production
   datasource:
-      url: jdbc:mysql://localhost:3306/spring_social?useSSL=false&serverTimezone=UTC
+      url: jdbc:mysql://localhost:3306/spring_social?useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8
       username: root
       password: apfhd11!
   jpa:
