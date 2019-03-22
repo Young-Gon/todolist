@@ -6,13 +6,11 @@ import javax.persistence.*
 @Entity
 @Table(name = "todo")
 data class TodoEntity(
-        @get:Basic
-        @get:ManyToOne
-        @get:JoinColumn(foreignKey = ForeignKey(name = "fk_todo_user"))
-        @get:JsonIgnore
+        @ManyToOne
+        @JoinColumn(foreignKey = ForeignKey(name = "fk_todo_user"))
+        @JsonIgnore
         var user: User? = null,
 
-        @get:Basic
-        @get:Column(name = "content")
+        @Column(name = "content")
         var content: String? = null
 ) : BaseEntity()

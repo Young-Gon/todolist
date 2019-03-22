@@ -10,17 +10,17 @@ import javax.persistence.*
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener::class)
 open class BaseEntity(
-        @get:Id
-        @get:GeneratedValue(strategy = GenerationType.AUTO)
-        var id:Long=0,
+        @Id
+        @GeneratedValue(strategy = GenerationType.AUTO)
+        val id:Long=0,
 
-        @get:CreatedDate
-        @get:Column(name = "create_at",nullable = false,updatable = false)
-        @get:Convert(converter = Jsr310JpaConverters.LocalDateTimeConverter::class)
+        @CreatedDate
+        @Column(name = "create_at",nullable = false,updatable = false)
+        @Convert(converter = Jsr310JpaConverters.LocalDateTimeConverter::class)
         var createAt: LocalDateTime=LocalDateTime.now(),
 
-        @get:LastModifiedDate
-        @get:Column(name = "modify_at",nullable = false)
-        @get:Convert(converter = Jsr310JpaConverters.LocalDateTimeConverter::class)
+        @LastModifiedDate
+        @Column(name = "modify_at",nullable = false)
+        @Convert(converter = Jsr310JpaConverters.LocalDateTimeConverter::class)
         var modifyAt: LocalDateTime=LocalDateTime.now()
 )
