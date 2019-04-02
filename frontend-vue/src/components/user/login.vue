@@ -3,13 +3,13 @@
         <div class="login-content">
             <h1 class="login-title">Login to SpringSocial</h1>
             <div class="social-login">
-                <a class="btn btn-block social-btn google" v-bind:href="GOOGLE_AUTH_URL">
+                <a class="btn btn-block social-btn google" href="" @click="getOauthUrl('google')">
                     <img src="../../assets/google-logo.png" alt="Google" /> Sign up with Google</a>
-                <a class="btn btn-block social-btn facebook" v-bind:href="FACEBOOK_AUTH_URL">
+                <a class="btn btn-block social-btn facebook" href="" @click="getOauthUrl('facebook')">
                     <img src="../../assets/fb-logo.png" alt="Facebook" /> Sign up with Facebook</a>
-                <a class="btn btn-block social-btn facebook" v-bind:href="NAVER_AUTH_URL">
+                <a class="btn btn-block social-btn facebook" href="" @click="getOauthUrl('naver')">
                     <img src="../../assets/naver-logo.png" alt="Naver" /> Sign up with naver</a>
-                <a class="btn btn-block social-btn facebook" v-bind:href="KAKAO_AUTH_URL">
+                <a class="btn btn-block social-btn facebook" href="" @click="getOauthUrl('kakao')">
                     <img src="../../assets/kakao-logo.png" alt="Kakao" /> Sign up with kakao</a>
             </div>
             <div class="or-separator">
@@ -38,17 +38,9 @@
 <script>
 	import notification from '../../libs/notification';
 
-	const getOauthUrl =(platfrom) => {
-    return `${process.env.VUE_APP_API}/oauth2/authorize/${platfrom}?redirect_uri=${process.env.VUE_APP_ORIGIN}${process.env.VUE_APP_OAUTH2_REDIRECT_URI}`
-};
-
-export default {
+	export default {
     name: "login",
     data: () => ({
-        GOOGLE_AUTH_URL: getOauthUrl('google'),
-        FACEBOOK_AUTH_URL: getOauthUrl('facebook'),
-        NAVER_AUTH_URL: getOauthUrl('naver'),
-        KAKAO_AUTH_URL: getOauthUrl('kakao'),
         user: {
             email: '',
             password: '',
@@ -80,7 +72,10 @@ export default {
 		            text: err.response.data.message,
 	            });
             }
-        }
+        },
+	    getOauthUrl(platfrom) {
+		    return `${process.env.VUE_APP_API}/oauth2/authorize/${platfrom}?redirect_uri=${process.env.VUE_APP_ORIGIN}${process.env.VUE_APP_OAUTH2_REDIRECT_URI}`
+	    }
     }
 }
 </script>

@@ -10,9 +10,6 @@
                         <router-link to="/profile">Profile</router-link>
                     </li>
                     <li>
-                        <router-link to="/todolist/list">TODO List</router-link>
-                    </li>
-                    <li>
                         <a @click="logout">Logout</a>
                     </li>
                 </ul>
