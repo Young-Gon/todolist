@@ -3,13 +3,13 @@
         <div class="signup-content">
             <h1 class="signup-title">Signup with SpringSocial</h1>
             <div class="social-signup">
-                <a class="btn btn-block social-btn google" v-bind:href="GOOGLE_AUTH_URL">
+                <a class="btn btn-block social-btn google" href="" @click="getOauthUrl('google')">
                     <img src="../../assets/google-logo.png" alt="Google" /> Sign up with Google</a>
-                <a class="btn btn-block social-btn facebook" v-bind:href="FACEBOOK_AUTH_URL">
+                <a class="btn btn-block social-btn facebook" href="" @click="getOauthUrl('facebook')">
                     <img src="../../assets/fb-logo.png" alt="Facebook" /> Sign up with Facebook</a>
-                <a class="btn btn-block social-btn facebook" v-bind:href="NAVER_AUTH_URL">
+                <a class="btn btn-block social-btn facebook" href="" @click="getOauthUrl('naver')">
                     <img src="../../assets/naver-logo.png" alt="Naver" /> Sign up with naver</a>
-                <a class="btn btn-block social-btn facebook" v-bind:href="KAKAO_AUTH_URL">
+                <a class="btn btn-block social-btn facebook" href="" @click="getOauthUrl('kakao')">
                     <img src="../../assets/kakao-logo.png" alt="Kakao" /> Sign up with kakao</a>
             </div>
             <div class="or-separator">
@@ -43,11 +43,7 @@
 <script>
 	import notification from '../../libs/notification';
 
-	const getOauthUrl =(platfrom) => {
-    return `${process.env.VUE_APP_API}/oauth2/authorize/${platfrom}?redirect_uri=${process.env.VUE_APP_ORIGIN}${process.env.VUE_APP_OAUTH2_REDIRECT_URI}`
-};
-
-export default {
+	export default {
     name: "signup",
     data: () => ({
         GOOGLE_AUTH_URL: getOauthUrl('google'),
@@ -85,7 +81,10 @@ export default {
                     text: err.response.data.message,
                 });
             }
-        }
+        },
+	    getOauthUrl(platfrom) {
+		    return `${process.env.VUE_APP_API}/oauth2/authorize/${platfrom}?redirect_uri=${process.env.VUE_APP_ORIGIN}${process.env.VUE_APP_OAUTH2_REDIRECT_URI}`
+	    }
     }
 }
 </script>
@@ -94,7 +93,7 @@ export default {
     .signup-container {
         text-align: center;
     }
-    
+
     .signup-content {
         background: #fff;
         box-shadow: 0 1px 11px rgba(0, 0, 0, 0.27);
