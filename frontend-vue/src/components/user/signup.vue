@@ -46,10 +46,6 @@
 	export default {
     name: "signup",
     data: () => ({
-        GOOGLE_AUTH_URL: getOauthUrl('google'),
-        FACEBOOK_AUTH_URL: getOauthUrl('facebook'),
-        NAVER_AUTH_URL: getOauthUrl('naver'),
-        KAKAO_AUTH_URL: getOauthUrl('kakao'),
         user: {
             name: '',
             email: '',
