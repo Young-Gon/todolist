@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: develop # 기본 환경 선택
+    active: production # 기본 환경 선택
   security:
     oauth2:
       client:
@@ -81,6 +81,7 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
+      use-new-id-generator-mappings: false
 ---
 spring:
   profiles: production
@@ -92,6 +93,7 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
+      use-new-id-generator-mappings: false
       naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
     properties:
       hibernate:

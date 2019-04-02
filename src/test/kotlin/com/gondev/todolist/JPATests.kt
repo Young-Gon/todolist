@@ -44,13 +44,11 @@ class JPATests(
                 user = user,
                 description = "설문 설명").apply{
             this.questions = mutableListOf(
-                Subjective(this).apply {
-                    this.no = 1
-                    this.content = "주관식 질문 1"
-                },
-                Objective(this).apply {
-                    this.no = 2
-                    this.content = "객관식 질문 2"
+                Subjective(
+                        no = 1,
+                        content = "주관식 질문 1",
+                        survey = this),
+                Objective(no = 2,content = "객관식 질문 2",survey = this).apply {
                     this.items = mutableListOf(
                         ObjectiveItem(1, "항목1",this),
                         ObjectiveItem(2, "항목2",this)

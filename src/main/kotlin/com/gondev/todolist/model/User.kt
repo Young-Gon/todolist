@@ -18,13 +18,16 @@ data class User (
         @Column(nullable = false)
         var email: String="",
 
+        @JsonIgnore
         @Column(nullable = false)
         @Enumerated(EnumType.STRING)
         var provider: AuthProvider=AuthProvider.local,
 
+        @JsonIgnore
         @Column(nullable = false)
         var emailVerified: Boolean=false,
 
+        @JsonIgnore
         @Column(nullable = false)
         var providerId: String="",
 

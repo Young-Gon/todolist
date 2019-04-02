@@ -88,7 +88,8 @@ class SecurityConfig(
                         "/**/*.js")
                 .permitAll()
                 .antMatchers("/auth/**", "/oauth2/**",
-                        "/todolist","/todolist/**")
+                        "/todolist","/todolist/**",
+                        "/survey","/survey/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
