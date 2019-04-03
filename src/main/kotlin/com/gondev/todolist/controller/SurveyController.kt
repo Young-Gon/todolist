@@ -1,101 +1,139 @@
 package com.gondev.todolist.controller
 
-import com.gondev.todolist.model.Objective
+import com.gondev.todolist.exception.PermissionDeniedOwnershipException
+import com.gondev.todolist.exception.ResourceNotFoundException
 import com.gondev.todolist.model.ObjectiveItem
-import com.gondev.todolist.model.Subjective
+import com.gondev.todolist.model.Question
+import com.gondev.todolist.model.QuestionType
+import com.gondev.todolist.model.Survey
 import com.gondev.todolist.payload.ApiResponse
-import com.gondev.todolist.payload.SubjectiveRequest
-import com.gondev.todolist.payload.SurveyRequest
-import com.gondev.todolist.repository.QuestionRepository
-import com.gondev.todolist.repository.SurveyRepository
+import com.gondev.todolist.repository.*
 import com.gondev.todolist.security.CurrentUser
 import com.gondev.todolist.security.UserPrincipal
+import org.springframework.data.domain.Pageable
+import org.springframework.data.domain.Sort
+import org.springframework.data.web.PageableDefault
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder
-import java.util.*
 import javax.validation.Valid
 
 @RestController
+@RequestMapping("/survey")
 class SurveyController(
         private val surveyRepository: SurveyRepository,
         private val questionRepository: QuestionRepository
 ) {
 
-    @PostMapping("/survey")
+    /**
+     * 설문 만들기
+     */
+    @PostMapping
     @PreAuthorize("hasRole('USER')")
-    fun addSurvey(@CurrentUser userPrincipal: UserPrincipal, @Valid @RequestBody survey: SurveyRequest) =
-            surveyRepository.save(survey.toSurvey(userPrincipal)).apply {
-                val location = ServletUriComponentsBuilder
-                        .fromCurrentRequest().path("/{surveyId}")
-                        .buildAndExpand(id).toUri()
+    fun createSurvey()= surveyRepository.save()
 
-                ResponseEntity.created(location)
-                        .body(ApiResponse(true, "설문지 추가 완료!"));
+    /**
+     * 내가 만든 설문 리스트
+     */
+    @GetMapping("/my")
+    @PreAuthorize("hasRole('USER')")
+    fun getMySurvey(
+            @CurrentUser
+            userPrincipal: UserPrincipal,
+
+            @PageableDefault(size = 10, sort = ["id"], direction = Sort.Direction.DESC)
+            pageable: Pageable
+    )= surveyRepository.findAllByUserId(userPrincipal.id, pageable)
+
+    /**
+     * 전체 설문 리스트
+     */
+    @GetMapping
+    fun getSurvey(
+            @PageableDefault(size = 10, sort = ["id"], direction = Sort.Direction.DESC)
+            pageable: Pageable
+    )= surveyRepository.findAll(pageable)
+
+    /**
+     * 설문 수정
+     */
+    @PutMapping
+    @PreAuthorize("hasRole('USER')")
+    fun modifySurvey(
+            @CurrentUser
+            userPrincipal: UserPrincipal,
+
+            @Valid
+            @RequestBody
+            request: Survey
+    )=
+            if(surveyRepository.existsById(request.id)){
+                surveyRepository.save(request)
+
+                ResponseEntity.ok()
+                        .body(ApiResponse(true, "설문지 변경 완료!"))
+            } else {
+                throw ResourceNotFoundException("설문지(${request.id})를 찾을 수 없습니다.")
             }
 
-    @GetMapping("/survey")
+    /**
+     * 질문 추가
+     * @param userPrincipal 로그인한 유저
+     * @param surveyId 질문을 추가할 설문지 ID
+     */
+    @PostMapping("{surveyId}/question")
     @PreAuthorize("hasRole('USER')")
-    fun getSurvey(@CurrentUser userPrincipal: UserPrincipal) =
-            surveyRepository.findAllByUserId(userPrincipal.id)
+    fun createQuestion(
+            @CurrentUser
+            userPrincipal: UserPrincipal,
 
-    @PostMapping("/survey/{surveyId}/question")
-    @PreAuthorize("hasRole('USER')")
-    fun addQuestion(@CurrentUser userPrincipal: UserPrincipal, @PathVariable surveyId: Long, @Valid @RequestBody question: SubjectiveRequest) =
-        surveyRepository.findById(surveyId).map {
-            if(it.user.id!=userPrincipal.id)
-                throw Exception("해당 설문지의 소유자가 아닙니다")
+            @PathVariable
+            surveyId: Long
+    )= surveyRepository.findById(surveyId).map { survey ->
+        if(survey.user?.id!=userPrincipal.id)
+            throw PermissionDeniedOwnershipException("해당 설문지의 소유자가 아닙니다")
 
-            val savedQuestion=questionRepository.save( question.toQuestion(it))
-
-            val location = ServletUriComponentsBuilder
-                    .fromCurrentRequest().path("/{questionId}")
-                    .buildAndExpand(savedQuestion.id).toUri()
-
-            ResponseEntity.created(location)
-                    .body(ApiResponse(true, "질문 추가 완료!"));
-
-        }.orElseThrow{
-            NoSuchElementException("설문지를 찾을 수 없습니다");
+        questionRepository.create {
+            this.no=questionRepository.countBySurvey(survey)+1
+            this.survey=survey
         }
+    }.orElseThrow {
+        ResourceNotFoundException("설문지($surveyId)를 찾을 수 없습니다.")
+    }
 
-    @PutMapping("/survey/{surveyId}/question/{questionId}/Objective")
+    /**
+     * 질문 수정
+     */
     @PreAuthorize("hasRole('USER')")
-    fun modifyQuestionTypeToObject(@CurrentUser userPrincipal: UserPrincipal,@PathVariable surveyId: Long,@PathVariable questionId: Long) =
-            modifyQuestionType(userPrincipal,surveyId,questionId,"Objective")
+    @PutMapping("{surveyId}/question")
+    fun modifyQuestion(
+            @CurrentUser
+            userPrincipal: UserPrincipal,
 
+            @PathVariable
+            surveyId: Long,
 
-    @PutMapping("/survey/{surveyId}/question/{questionId}/Subjective")
-    @PreAuthorize("hasRole('USER')")
-    fun modifyQuestionTypeToSubject(@CurrentUser userPrincipal: UserPrincipal,@PathVariable surveyId: Long,@PathVariable questionId: Long) =
-            modifyQuestionType(userPrincipal,surveyId,questionId,"Subjective")
+            @Valid
+            @RequestBody
+            request: Question
+    )= questionRepository.findById(request.id).map { question ->
+        if (question.survey?.user?.id != userPrincipal.id)
+            throw PermissionDeniedOwnershipException("해당 설문지의 소유자가 아닙니다")
 
-    private fun modifyQuestionType(userPrincipal: UserPrincipal, surveyId: Long, questionId: Long, type: String)=
-        questionRepository.findById(questionId).map {
-            if(it.survey.id!=surveyId || it.survey.user.id!=userPrincipal.id)
-                throw Exception("해당 설문지의 소유자가 아닙니다")
+        questionRepository.update(question){
+            this.no=request.no
+            this.content=request.content
+            this.type=request.type
 
-            val question = when (type) {
-                "Objective" -> {
-                    val objective = Objective(it).apply {
-                        items.add(ObjectiveItem(1, "항목 1", this))
-                        items.add(ObjectiveItem(2, "항목 2", this))
-                    }
-                    System.out.print(objective.id)
-                    questionRepository.save(objective)
-                }
-                "Subjective" ->
-                    questionRepository.save(Subjective(it).apply {
-                        answer = ""
-                    })
-                else ->
-                    questionRepository.save(it)
+            if(type== QuestionType.Objective && objectiveItems.size==0){
+                objectiveItems.add(ObjectiveItem(1, "항목 1", this))
+                objectiveItems.add(ObjectiveItem(2, "항목 2", this))
             }
-
-            ResponseEntity.ok()
-                    .body(ApiResponse(true, "질문 타입 변경 완료!"));
-        }.orElseThrow{
-            NoSuchElementException("설문지를 찾을 수 없습니다");
         }
+
+        ResponseEntity.ok()
+                .body(ApiResponse(true, "질문 변경 완료!"))
+    }.orElseThrow {
+        throw ResourceNotFoundException("요청한 질문(${request.id})을 찾을 수 없습니다")
+    }
 }

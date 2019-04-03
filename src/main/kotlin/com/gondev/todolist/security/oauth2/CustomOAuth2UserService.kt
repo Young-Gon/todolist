@@ -1,7 +1,6 @@
 package com.gondev.todolist.security.oauth2
 
 import com.gondev.todolist.exception.OAuth2AuthenticationProcessingException
-import com.gondev.todolist.model.AuthProvider
 import com.gondev.todolist.model.User
 import com.gondev.todolist.repository.UserRepository
 import com.gondev.todolist.repository.create

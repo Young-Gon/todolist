@@ -5,24 +5,36 @@
 # * 'ptr' and 'ptrp' create a POST request with a simple or parameter-like body;
 # * 'mptr' and 'fptr' create a POST request to submit a form with a text or file field (multipart/form-data);
 
+### 설문지 추가
 POST http://localhost:8080/survey
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTUzNjY3NjIzLCJleHAiOjE1NTQ1MzE2MjN9.bei_vwb47Q-7cvFrEmkRVzDOxU07Og0UXFJ9SaoLXQIzlQH2GYT1s89Bx8a7JTKzGfLj6HSTvmXIqSPVLlEang
 
 {
-  "title": "설문지",
-  "description": "설문지 설명"
 }
 
-###
-
-POST http://localhost:8080/survey/3/question
+### 설문지 수정
+PUT http://localhost:8080/survey
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTUzNjY3NjIzLCJleHAiOjE1NTQ1MzE2MjN9.bei_vwb47Q-7cvFrEmkRVzDOxU07Og0UXFJ9SaoLXQIzlQH2GYT1s89Bx8a7JTKzGfLj6HSTvmXIqSPVLlEang
 
 {
-  "no": 1,
-  "content": "질문 1"
+  "id": 1,
+  "title": "설문지 4",
+  "description": "설문지 설명"
+}
+
+### 내 설문지 목록
+GET http://localhost:8080/survey/my
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTUzNjY3NjIzLCJleHAiOjE1NTQ1MzE2MjN9.bei_vwb47Q-7cvFrEmkRVzDOxU07Og0UXFJ9SaoLXQIzlQH2GYT1s89Bx8a7JTKzGfLj6HSTvmXIqSPVLlEang
+
+### 질문 추가
+POST http://localhost:8080/survey/1/question
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTUzNjY3NjIzLCJleHAiOjE1NTQ1MzE2MjN9.bei_vwb47Q-7cvFrEmkRVzDOxU07Og0UXFJ9SaoLXQIzlQH2GYT1s89Bx8a7JTKzGfLj6HSTvmXIqSPVLlEang
+
+{
 }
 
 ###
@@ -40,11 +52,5 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTUzNjY3NjIzL
   "createAt": "2019-03-28T15:32:28.200075",
   "modifyAt": "2019-03-28T15:32:28.200075"
 }
-
-###
-
-GET http://localhost:8080/survey/my
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTUzNjY3NjIzLCJleHAiOjE1NTQ1MzE2MjN9.bei_vwb47Q-7cvFrEmkRVzDOxU07Og0UXFJ9SaoLXQIzlQH2GYT1s89Bx8a7JTKzGfLj6HSTvmXIqSPVLlEang
 
 ###

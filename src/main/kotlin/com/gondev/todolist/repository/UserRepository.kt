@@ -1,7 +1,7 @@
 package com.gondev.todolist.repository
 
-import com.gondev.todolist.model.AuthProvider
 import com.gondev.todolist.model.User
+import com.gondev.todolist.security.oauth2.AuthProvider
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 import java.util.*

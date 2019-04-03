@@ -1,20 +1,20 @@
 package com.gondev.todolist.model
 
+import com.gondev.todolist.model.audit.OwnerShipAudit
 import org.hibernate.annotations.Fetch
 import org.hibernate.annotations.FetchMode
-import javax.persistence.*
+import javax.persistence.CascadeType
+import javax.persistence.Entity
+import javax.persistence.FetchType
+import javax.persistence.OneToMany
 
 @Entity
 data class Survey(
-        val title: String,
+        var title: String="",
 
-        val description: String?=null,
+        var description: String?=null,
 
         @OneToMany(mappedBy = "survey", cascade = [CascadeType.ALL], fetch = FetchType.EAGER, orphanRemoval = true)
         @Fetch(FetchMode.SELECT)
-        var questions:MutableList<Question> = arrayListOf(),
-
-        @ManyToOne
-        @JoinColumn(foreignKey = ForeignKey(name = "fk_user"))
-        val user: User
-):BaseEntity()
+        var questions:MutableList<Question> = arrayListOf()
+):OwnerShipAudit()

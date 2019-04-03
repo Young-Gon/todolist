@@ -1,6 +1,7 @@
 package com.gondev.todolist.model
 
 import com.fasterxml.jackson.annotation.JsonIgnore
+import com.gondev.todolist.model.audit.BaseAudit
 import javax.persistence.*
 
 @Entity
@@ -13,4 +14,4 @@ data class TodoEntity(
 
         @Column(name = "content")
         var content: String? = null
-) : BaseEntity()
+) : BaseAudit()

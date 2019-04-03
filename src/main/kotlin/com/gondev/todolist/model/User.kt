@@ -1,6 +1,7 @@
 package com.gondev.todolist.model
 
 import com.fasterxml.jackson.annotation.JsonIgnore
+import com.gondev.todolist.security.oauth2.AuthProvider
 import javax.persistence.*
 import javax.validation.constraints.Email
 
@@ -21,7 +22,7 @@ data class User (
         @JsonIgnore
         @Column(nullable = false)
         @Enumerated(EnumType.STRING)
-        var provider: AuthProvider=AuthProvider.local,
+        var provider: AuthProvider = AuthProvider.local,
 
         @JsonIgnore
         @Column(nullable = false)

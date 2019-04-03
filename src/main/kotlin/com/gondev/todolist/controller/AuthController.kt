@@ -1,7 +1,6 @@
 package com.gondev.todolist.controller
 
 import com.gondev.todolist.exception.BadRequestException
-import com.gondev.todolist.model.AuthProvider
 import com.gondev.todolist.payload.ApiResponse
 import com.gondev.todolist.payload.AuthResponse
 import com.gondev.todolist.payload.LoginRequest
@@ -9,6 +8,7 @@ import com.gondev.todolist.payload.SignUpRequest
 import com.gondev.todolist.repository.UserRepository
 import com.gondev.todolist.repository.create
 import com.gondev.todolist.security.TokenProvider
+import com.gondev.todolist.security.oauth2.AuthProvider
 import org.springframework.http.ResponseEntity
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
@@ -48,7 +48,7 @@ class AuthController(
 
     @PostMapping("/signup")
     fun registerUser(@Valid @RequestBody signUpRequest: SignUpRequest): ResponseEntity<*> {
-        if (userRepository.existsByEmailAndProvider(signUpRequest.email,AuthProvider.local)) {
+        if (userRepository.existsByEmailAndProvider(signUpRequest.email, AuthProvider.local)) {
             throw BadRequestException("Email address already in use.")
         }
 

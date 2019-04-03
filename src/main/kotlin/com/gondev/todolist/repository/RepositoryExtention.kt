@@ -8,3 +8,6 @@ inline fun <reified T : Any, R> JpaRepository<T, R>.update(entity: T, block: T.(
 
 inline fun <reified T : Any, R> JpaRepository<T, R>.create(block: T.() -> Unit) =
         this.save(T::class.createInstance().apply(block))
+
+inline fun <reified T : Any, R> JpaRepository<T, R>.save() =
+        this.save(T::class.createInstance())

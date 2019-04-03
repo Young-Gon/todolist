@@ -1,4 +1,4 @@
-package com.gondev.todolist.model
+package com.gondev.todolist.security.oauth2
 
 enum class AuthProvider {
     local,
