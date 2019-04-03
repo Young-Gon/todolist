@@ -37,8 +37,9 @@ class UserState extends VuexModule {
 
 	@Action({commit: "setUserDetail"})
 	public async getUserDetail() {
-		if(this.stateToken==null || this.stateToken==='null' || this.stateToken==='')
+		if (this.stateToken == null || this.stateToken === "null" || this.stateToken === "") {
 			return
+		}
 
 		try {
 			const response = await Axios.get(`/user/me`)

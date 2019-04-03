@@ -1,4 +1,4 @@
-module.exports = {
+{
   "defaultSeverity": "warning",
   "extends": [
     "tslint:recommended"
@@ -9,16 +9,15 @@ module.exports = {
     ]
   },
   "rules": {
-    "no-console": process.env.NODE_ENV === "production" ? "error" : "off",
-    "no-debugger": process.env.NODE_ENV === "production" ? "error" : "off",
+    "no-console": false,
+    "no-debugger":false,
     "quotemark": [true, "double"],
     "indent": [true, "tabs"],
     "interface-name": false,
     "ordered-imports": false,
     "object-literal-sort-keys": false,
     "semicolon": [false,"never"],
-    "max-line-length": [true,
-      {
+    "max-line-length": [true, {
         "limit":  120,
         "ignore-pattern": "^\\s*(.+)$|"
       }

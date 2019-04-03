@@ -21,26 +21,26 @@ export default new Router({
 			component: () => import("./components/auth/login.vue"),
 		},
 		{
-			path: '/signup',
-			name: 'Signup',
+			path: "/signup",
+			name: "Signup",
 			component: () => import("./components/auth/signup.vue"),
 		},
 		{
-			path: '/profile',
-			name: 'Profile',
+			path: "/profile",
+			name: "Profile",
 			component: () => import("./components/profile.vue"),
 			beforeEnter: isAuthenticated,
 		},
 		{
-			path: '/oauth2/redirect',
-			name: 'Oauth2redirect',
+			path: "/oauth2/redirect",
+			name: "Oauth2redirect",
 			component: () => import("./components/auth/oauth2redirect.vue"),
 			beforeEnter: isAuthenticated,
 		},
 		{
-			path: '*',
-			name: '/NotFound',
+			path: "*",
+			name: "/NotFound",
 			component:  () => import("./components/notFound.vue"),
-		}
+		},
 	],
 })

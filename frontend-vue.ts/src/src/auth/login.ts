@@ -4,14 +4,14 @@ import Axios from "@/lib/axios.custom"
 @Component
 export default class Login extends Vue {
 
-	static getOauthUrl(platform: string): string {
+	public static getOauthUrl(platform: string): string {
 		return `${process.env.VUE_APP_API}/oauth2/authorize/${platform}?redirect_uri=${process.env.VUE_APP_ORIGIN}${process.env.VUE_APP_OAUTH2_REDIRECT_URI}`
 	}
 
-	GOOGLE_AUTH_URL: string = Login.getOauthUrl("google")
-	FACEBOOK_AUTH_URL: string =Login.getOauthUrl("facebook")
-	NAVER_AUTH_URL: string = Login.getOauthUrl("naver")
-	KAKAO_AUTH_URL: string = Login.getOauthUrl("kakao")
+	public GOOGLE_AUTH_URL: string = Login.getOauthUrl("google")
+	public FACEBOOK_AUTH_URL: string = Login.getOauthUrl("facebook")
+	public NAVER_AUTH_URL: string = Login.getOauthUrl("naver")
+	public KAKAO_AUTH_URL: string = Login.getOauthUrl("kakao")
 
 	public user: {
 		email: string

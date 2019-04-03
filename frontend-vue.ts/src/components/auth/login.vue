@@ -36,9 +36,9 @@
 </template>
 
 <script lang="ts">
-    import Login from "@/src/auth/login"
+	import Login from "@/src/auth/login"
 
-    export default Login
+	export default Login
 </script>
 
 <style scoped>

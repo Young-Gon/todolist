@@ -7,13 +7,13 @@
 </template>
 
 <script lang="ts">
-    import AppHeader from "./components/header.vue"
-    import {Component, Vue} from "vue-property-decorator"
+	import AppHeader from "./components/header.vue"
+	import {Component, Vue} from "vue-property-decorator"
 
-    @Component({
-	components: {
-		AppHeader,
-	},
+	@Component({
+components: {
+	AppHeader,
+},
 })
 export default class App extends Vue {
 	public created(): void {

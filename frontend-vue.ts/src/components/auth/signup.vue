@@ -41,9 +41,9 @@
 </template>
 
 <script lang="ts">
-    import Signup from "@/src/auth/signup"
+	import Signup from "@/src/auth/signup"
 
-    export default Signup
+	export default Signup
 </script>
 
 <style scoped>

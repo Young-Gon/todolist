@@ -5,10 +5,10 @@ import Login from "@/src/auth/login"
 @Component
 export default class Signup extends Vue {
 
-	GOOGLE_AUTH_URL: string = Login.getOauthUrl("google")
-	FACEBOOK_AUTH_URL: string =Login.getOauthUrl("facebook")
-	NAVER_AUTH_URL: string = Login.getOauthUrl("naver")
-	KAKAO_AUTH_URL: string = Login.getOauthUrl("kakao")
+	public GOOGLE_AUTH_URL: string = Login.getOauthUrl("google")
+	public FACEBOOK_AUTH_URL: string = Login.getOauthUrl("facebook")
+	public NAVER_AUTH_URL: string = Login.getOauthUrl("naver")
+	public KAKAO_AUTH_URL: string = Login.getOauthUrl("kakao")
 
 	public user: {
 		name: string,
@@ -32,7 +32,6 @@ export default class Signup extends Vue {
 			})
 			this.$router.push("/login");
 		} catch (err) {
-			console.log(err.response);
 			this.$notify({
 				group: "noti",
 				type: "error",

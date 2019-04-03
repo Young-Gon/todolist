@@ -27,14 +27,14 @@
 </template>
 
 <script lang="ts">
-    import {Component, Vue} from "vue-property-decorator"
+	import {Component, Vue} from "vue-property-decorator"
 
-    @Component
-	export default class Header extends Vue {
-		public logout() {
-			this.$emit("logout")
-		}
+	@Component
+export default class Header extends Vue {
+	public logout() {
+		this.$emit("logout")
 	}
+}
 </script>
 
 <style scoped>
