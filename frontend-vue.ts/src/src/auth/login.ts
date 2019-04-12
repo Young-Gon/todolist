@@ -14,7 +14,7 @@ export default class Login extends Vue {
 	public KAKAO_AUTH_URL: string = Login.getOauthUrl("kakao")
 
 	public user: {
-		email: string
+		email: string,
 		password: string,
 	} = {
 		email: "",

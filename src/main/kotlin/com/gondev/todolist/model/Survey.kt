@@ -14,7 +14,7 @@ data class Survey(
 
         var description: String?=null,
 
-        @OneToMany(mappedBy = "survey", cascade = [CascadeType.ALL], fetch = FetchType.EAGER, orphanRemoval = true)
+        @OneToMany(mappedBy = "survey", cascade = [CascadeType.ALL], fetch = FetchType.LAZY, orphanRemoval = true)
         @Fetch(FetchMode.SELECT)
         var questions:MutableList<Question> = arrayListOf()
 ):OwnerShipAudit()

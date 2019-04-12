@@ -7,10 +7,10 @@
 </template>
 
 <script>
-  import appHeader from './components/header.vue';
-  import notification from './libs/notification';
+  import appHeader from './components/header.vue'
+  import notification from './libs/notification'
 
-export default {
+  export default {
   name: 'app',
   created(){
     console.log("create app");
@@ -77,15 +77,6 @@ export default {
     font-weight: 400;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: rgba(0,0,0,.80);
-  }
-
-  .container {
-    width: 100%;
-    max-width: 1300px;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 15px;
-    padding-right: 15px;
   }
 
   @media screen and (min-width: 1200px) {

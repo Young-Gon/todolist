@@ -3,6 +3,7 @@ import Vuex from "vuex"
 import {Action, Module, Mutation, VuexModule} from "vuex-module-decorators"
 import {User} from "@/response/user"
 import Axios, {setHeader} from "@/lib/axios.custom"
+import {AxiosResponse} from "axios";
 
 Vue.use(Vuex)
 
@@ -42,8 +43,8 @@ class UserState extends VuexModule {
 		}
 
 		try {
-			const response = await Axios.get(`/user/me`)
-			return response.data as User
+			const response: AxiosResponse<User> = await Axios.get(`/user/me`)
+			return response.data
 		} catch (e) {
 			Vue.notify({
 				group: "noti",

@@ -1,5 +1,6 @@
 package com.gondev.todolist.controller
 
+import com.gondev.todolist.exception.BadRequestException
 import com.gondev.todolist.exception.PermissionDeniedOwnershipException
 import com.gondev.todolist.exception.ResourceNotFoundException
 import com.gondev.todolist.model.ObjectiveItem
@@ -22,7 +23,8 @@ import javax.validation.Valid
 @RequestMapping("/survey")
 class SurveyController(
         private val surveyRepository: SurveyRepository,
-        private val questionRepository: QuestionRepository
+        private val questionRepository: QuestionRepository,
+        private val objectiveItemRepository: ObjectiveItemRepository
 ) {
 
     /**
@@ -52,7 +54,22 @@ class SurveyController(
     fun getSurvey(
             @PageableDefault(size = 10, sort = ["id"], direction = Sort.Direction.DESC)
             pageable: Pageable
-    )= surveyRepository.findAll(pageable)
+    )= surveyRepository.findAllBy(pageable)
+
+    /**
+     * 설문 상세
+     */
+    @GetMapping("/{surveyId}")
+    @PreAuthorize("hasRole('USER')")
+    fun getSurveyDetail(
+            @PathVariable
+            surveyId: Long,
+
+            @PageableDefault(size = 10, sort = ["id"], direction = Sort.Direction.DESC)
+            pageable: Pageable
+    )= surveyRepository.findById(surveyId).orElseThrow {
+        throw ResourceNotFoundException("설문지($surveyId)를 찾을 수 없습니다.")
+    }
 
     /**
      * 설문 수정
@@ -88,13 +105,30 @@ class SurveyController(
             userPrincipal: UserPrincipal,
 
             @PathVariable
-            surveyId: Long
+            surveyId: Long,
+
+            @RequestParam(value="index", required = false, defaultValue = "0")
+            index: Int
     )= surveyRepository.findById(surveyId).map { survey ->
+        if(index<0)
+            throw NumberFormatException("인덱스($index)가 0보다 작습니다")
+
         if(survey.user?.id!=userPrincipal.id)
             throw PermissionDeniedOwnershipException("해당 설문지의 소유자가 아닙니다")
 
+        val questionSize=questionRepository.countBySurvey(survey)
+        if(questionSize+1<index)
+            throw BadRequestException("삽입 인덱스($index)값이 질문 리스트 크기($questionSize)보다 큽니다")
+
+        val questionNo=if(index>0) {
+            questionRepository.updateIndex(index)
+            index
+        } else {
+            questionSize+1
+        }
+
         questionRepository.create {
-            this.no=questionRepository.countBySurvey(survey)+1
+            this.no=questionNo
             this.survey=survey
         }
     }.orElseThrow {
@@ -120,6 +154,9 @@ class SurveyController(
         if (question.survey?.user?.id != userPrincipal.id)
             throw PermissionDeniedOwnershipException("해당 설문지의 소유자가 아닙니다")
 
+        if(question.survey?.id!=surveyId)
+            throw ResourceNotFoundException("요청한 설문지($surveyId)를 찾을 수 없습니다")
+
         questionRepository.update(question){
             this.no=request.no
             this.content=request.content
@@ -135,5 +172,31 @@ class SurveyController(
                 .body(ApiResponse(true, "질문 변경 완료!"))
     }.orElseThrow {
         throw ResourceNotFoundException("요청한 질문(${request.id})을 찾을 수 없습니다")
+    }
+
+    @PreAuthorize("hasRole('USER')")
+    @PutMapping("{surveyId}/question/{questionId}")
+    fun createQuestionItem(
+            @CurrentUser
+            userPrincipal: UserPrincipal,
+
+            @PathVariable
+            surveyId: Long,
+
+            @PathVariable
+            questionId: Long
+    )=questionRepository.findById(questionId).map { question ->
+        if (question.survey?.user?.id != userPrincipal.id)
+            throw PermissionDeniedOwnershipException("해당 설문지의 소유자가 아닙니다")
+
+        if(question.survey?.id!=surveyId)
+            throw ResourceNotFoundException("요청한 설문지($surveyId)를 찾을 수 없습니다")
+
+        objectiveItemRepository.create {
+            no=objectiveItemRepository.countByQuestion(question)+1
+            name="항목 $no"
+        }
+    }.orElseThrow {
+        throw ResourceNotFoundException("요청한 질문($questionId)을 찾을 수 없습니다")
     }
 }

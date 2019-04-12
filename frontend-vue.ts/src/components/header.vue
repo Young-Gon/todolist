@@ -1,29 +1,23 @@
 <template>
-	<div class="container">
-		<div class="app-branding">
-			<router-link to="/" class="app-title">Spring Social</router-link>
-		</div>
-		<div class="app-options">
-			<nav class="app-nav">
-				<ul v-if="this.$store.getters.authenticated">
-					<li>
-						<router-link to="/profile">Profile</router-link>
-					</li>
-					<li>
-						<a @click="logout">Logout</a>
-					</li>
-				</ul>
-				<ul v-else>
-					<li>
-						<router-link to="/login">Login</router-link>
-					</li>
-					<li>
-						<router-link to="/signup">Signup</router-link>
-					</li>
-				</ul>
-			</nav>
-		</div>
-	</div>
+	<v-toolbar >
+		<v-toolbar-title >
+			<router-link to="/">Analysum</router-link>
+		</v-toolbar-title>
+		<v-spacer></v-spacer>
+		<v-toolbar-items v-if="this.$store.getters.authenticated">
+			<v-flex align-center layout py-2>
+			<router-link v-ripple class="toolbar-items" to="/profile">Profile</router-link>
+			<router-link v-ripple class="toolbar-items" to="/mySurveyList">Survey</router-link>
+			<v-btn flat class="toolbar-items" @click="logout">Logout</v-btn>
+			</v-flex>
+		</v-toolbar-items>
+		<v-toolbar-items v-else>
+			<v-flex align-center layout py-2>
+			<router-link v-ripple class="toolbar-items" to="/login">Login</router-link>
+			<router-link v-ripple class="toolbar-items" to="/signup">Signup</router-link>
+			</v-flex>
+		</v-toolbar-items>
+	</v-toolbar>
 </template>
 
 <script lang="ts">
@@ -85,6 +79,16 @@ export default class Header extends Vue {
 
 	.app-nav ul li a.active {
 		color: #0f96f6;
+	}
+	.v-btn {
+		color: #216cf3 !important;
+	}
+
+	.v-btn--active:before,
+	.v-btn:focus:before,
+	.v-btn:hover:before {
+		color: #40a9ff !important;
+		background-color: transparent;
 	}
 
 </style>

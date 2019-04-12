@@ -8,7 +8,7 @@
 ### 설문지 추가
 POST http://localhost:8080/survey
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTUzNjY3NjIzLCJleHAiOjE1NTQ1MzE2MjN9.bei_vwb47Q-7cvFrEmkRVzDOxU07Og0UXFJ9SaoLXQIzlQH2GYT1s89Bx8a7JTKzGfLj6HSTvmXIqSPVLlEang
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTU0MzYxODc3LCJleHAiOjE1NTUyMjU4Nzd9.EUVOErwQcHEiTvjG5GxrpgGasnCP8L7qjaTOKRLyCmUV4VSJdPKZ-8YfG2PnQMHOmnpS7dBCzX1pvryuWOeT0A
 
 {
 }
@@ -16,7 +16,7 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTUzNjY3NjIzL
 ### 설문지 수정
 PUT http://localhost:8080/survey
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTUzNjY3NjIzLCJleHAiOjE1NTQ1MzE2MjN9.bei_vwb47Q-7cvFrEmkRVzDOxU07Og0UXFJ9SaoLXQIzlQH2GYT1s89Bx8a7JTKzGfLj6HSTvmXIqSPVLlEang
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTU0MzYxODc3LCJleHAiOjE1NTUyMjU4Nzd9.EUVOErwQcHEiTvjG5GxrpgGasnCP8L7qjaTOKRLyCmUV4VSJdPKZ-8YfG2PnQMHOmnpS7dBCzX1pvryuWOeT0A
 
 {
   "id": 1,
@@ -27,12 +27,23 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTUzNjY3NjIzL
 ### 내 설문지 목록
 GET http://localhost:8080/survey/my
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTUzNjY3NjIzLCJleHAiOjE1NTQ1MzE2MjN9.bei_vwb47Q-7cvFrEmkRVzDOxU07Og0UXFJ9SaoLXQIzlQH2GYT1s89Bx8a7JTKzGfLj6HSTvmXIqSPVLlEang
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTU0MzYxODc3LCJleHAiOjE1NTUyMjU4Nzd9.EUVOErwQcHEiTvjG5GxrpgGasnCP8L7qjaTOKRLyCmUV4VSJdPKZ-8YfG2PnQMHOmnpS7dBCzX1pvryuWOeT0A
+
+### 설문지 목록
+GET http://localhost:8080/survey/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTU0MzYxODc3LCJleHAiOjE1NTUyMjU4Nzd9.EUVOErwQcHEiTvjG5GxrpgGasnCP8L7qjaTOKRLyCmUV4VSJdPKZ-8YfG2PnQMHOmnpS7dBCzX1pvryuWOeT0A
+
+### 설문지 상세
+GET http://localhost:8080/survey/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTU0MzYxODc3LCJleHAiOjE1NTUyMjU4Nzd9.EUVOErwQcHEiTvjG5GxrpgGasnCP8L7qjaTOKRLyCmUV4VSJdPKZ-8YfG2PnQMHOmnpS7dBCzX1pvryuWOeT0A
+
 
 ### 질문 추가
-POST http://localhost:8080/survey/1/question
+POST http://localhost:8080/survey/1/question?index=4
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTUzNjY3NjIzLCJleHAiOjE1NTQ1MzE2MjN9.bei_vwb47Q-7cvFrEmkRVzDOxU07Og0UXFJ9SaoLXQIzlQH2GYT1s89Bx8a7JTKzGfLj6HSTvmXIqSPVLlEang
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTU0MzYxODc3LCJleHAiOjE1NTUyMjU4Nzd9.EUVOErwQcHEiTvjG5GxrpgGasnCP8L7qjaTOKRLyCmUV4VSJdPKZ-8YfG2PnQMHOmnpS7dBCzX1pvryuWOeT0A
 
 {
 }
@@ -41,14 +52,14 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTUzNjY3NjIzL
 
 PUT http://localhost:8080/survey/1/question/
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTUzNjY3NjIzLCJleHAiOjE1NTQ1MzE2MjN9.bei_vwb47Q-7cvFrEmkRVzDOxU07Og0UXFJ9SaoLXQIzlQH2GYT1s89Bx8a7JTKzGfLj6HSTvmXIqSPVLlEang
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTU0MzYxODc3LCJleHAiOjE1NTUyMjU4Nzd9.EUVOErwQcHEiTvjG5GxrpgGasnCP8L7qjaTOKRLyCmUV4VSJdPKZ-8YfG2PnQMHOmnpS7dBCzX1pvryuWOeT0A
 
 {
   "no": 1,
   "content": "질문 1",
-  "type": "Objective",
+  "type": "Subjective",
   "objectiveItems": [],
-  "id": 2,
+  "id": 1,
   "createAt": "2019-03-28T15:32:28.200075",
   "modifyAt": "2019-03-28T15:32:28.200075"
 }

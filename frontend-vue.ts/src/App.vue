@@ -1,9 +1,9 @@
 <template>
-	<div id="app">
+	<v-app id="app">
 		<notifications group="noti" position="bottom center" />
 		<app-header @logout="logout"/>
 		<router-view/>
-	</div>
+	</v-app>
 </template>
 
 <script lang="ts">
@@ -11,9 +11,9 @@
 	import {Component, Vue} from "vue-property-decorator"
 
 	@Component({
-components: {
-	AppHeader,
-},
+	components: {
+		AppHeader,
+	},
 })
 export default class App extends Vue {
 	public created(): void {
@@ -28,7 +28,11 @@ export default class App extends Vue {
 }
 </script>
 
-<style>
+<style lang="scss">
+	@import url("https://use.fontawesome.com/releases/v5.6.3/css/all.css");
+	@import url('https://cdn.rawgit.com/hiun/NanumSquare/master/nanumsquare.css');
+	@import url("https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons");
+
 	* {
 		-webkit-box-sizing: border-box;
 		-moz-box-sizing: border-box;

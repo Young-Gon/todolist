@@ -32,6 +32,18 @@ export default new Router({
 			beforeEnter: isAuthenticated,
 		},
 		{
+			path: "/mySurveyList",
+			name: "MySurveyList",
+			component: () => import("./components/my-survey-list.vue"),
+			beforeEnter: isAuthenticated,
+		},
+		{
+			path: "/survey/:surveyId",
+			name: "Survey",
+			component: () => import("./components/survey.vue"),
+			beforeEnter: isAuthenticated,
+		},
+		{
 			path: "/oauth2/redirect",
 			name: "Oauth2redirect",
 			component: () => import("./components/auth/oauth2redirect.vue"),

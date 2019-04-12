@@ -10,7 +10,5 @@ interface SurveyProjection {
 
     fun getDescription(): String?
 
-    fun getQuestions(): List<QuestionProjection>
-
     fun getUser(): User
 }
